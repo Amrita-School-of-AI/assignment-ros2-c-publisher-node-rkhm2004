@@ -10,10 +10,23 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-# TODO: Add the executable target named 'publisher_node'
+# COMPLETED: Add the executable target named 'publisher_node'
+
 # 1. Add executable using src/publisher_node.cpp
+add_executable(publisher_node src/publisher_node.cpp)
+
 # 2. Add dependencies (ament_target_dependencies) for rclcpp and std_msgs
+# This handles include directories and linking automatically for ROS 2 packages
+ament_target_dependencies(publisher_node 
+  rclcpp 
+  std_msgs
+)
+
 # 3. Install the target to the DESTINATION lib/${PROJECT_NAME}
+# This allows 'ros2 run ros2_publisher publisher_node' to find the executable
+install(TARGETS publisher_node
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
